@@ -18,17 +18,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
-        Category::truncate();
-        Post::truncate();
+       // User::truncate();
+        //Category::truncate();
+        //Post::truncate();
 
-        $user=User::factory()->create([
+        $bayan=User::factory()->create([
             'name' => 'bayan',
+            'user_name' => 'bayandl',
         ]);
+
+        $ahmed=User::factory()->create([
+          'name' => 'ahmed',
+          'user_name' => 'ahmed1',
+      ]);
+        $category=Category::factory()->create();
+        $category2=Category::factory()->create();
+
         Post::factory(5)->create([
-           'user_id' => $user->id
+           'user_id' => $bayan->id,
+           'category_id' => $category2->id
         ]);
-        $user=User::factory(10)->create();
+
+        Post::factory(5)->create([
+          'user_id' => $ahmed->id,
+          'category_id' => $category->id
+       ]);
+      //$user=User::factory(10)->create();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
@@ -50,7 +65,7 @@ class DatabaseSeeder extends Seeder
              ]);
               */
         
-    Category::factory(10)->create();
-      Post::factory(10)->create();
+  //  Category::factory(10)->create();
+    //  Post::factory(10)->create();
     }
 }

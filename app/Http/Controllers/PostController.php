@@ -21,7 +21,8 @@ class PostController extends Controller
        // });
         return view('posts.index', [
             //'posts'=>Post::all(),
-            'posts'=>Post::with('Category')->get(),
+            'posts'=>Post::latest()->filter([])->get(),
+            //with('Category')->get(),
           ]);
 
     }
@@ -47,7 +48,7 @@ class PostController extends Controller
     {
     $post=Post::where(['slug' => $slug])->first();  
         return view('posts.post', [
-            'post_content'=>$post,
+            'post'=>$post,
         ]); 
         
     }

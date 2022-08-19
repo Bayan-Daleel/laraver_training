@@ -2,6 +2,7 @@
 
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\User;
 use function PHPSTORM_META\map;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -39,10 +40,12 @@ Route::resource('posts',PostController::class)->only(
 //);
 
 
-Route::get('/categories/{category}', function ( Category $category)   
+Route::get('/categories/{category:slug}', function ( Category $category)   
 {
    return view('posts.index',[
-      'posts'=>$category->posts]);
+      'posts'=>$category->posts
+      //->load(['category','author'])
+   ]);
   // $post_content=Post::findOrFail($post->id);
 }); 
 
@@ -51,6 +54,16 @@ Route::get('users', [UserContraller::class, 'index']);
 Route::get('users/invoke', InvController::class);
 
 //Route::resource('categories',CategoryController::class); 
+
+
+Route::get('/author/{author:user_name}', function (User $author)   
+{
+   return view('posts.index',[
+      'posts'=>$author->posts
+      //->load(['category','author'])
+   ]);
+  // $post_content=Post::findOrFail($post->id);
+}); 
 
 Route::get('test', function(){ 
    Post::create(['title'=>'my first post',
