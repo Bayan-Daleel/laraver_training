@@ -9,19 +9,15 @@ use PhpParser\Node\Expr\AssignOp\Pow;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
        // DB::Listen(function($query){
-         // logger($query->sql,$query->bindings);  
+         // logger($query->sql,$query->bindings);
        // });
         return view('posts.index', [
             //'posts'=>Post::all(),
-            'posts'=>Post::latest()->filter([])->get(),
+            'posts'=>Post::latest()->filter(\request(['search','category','author']))->get(),
             //with('Category')->get(),
           ]);
 
@@ -37,20 +33,20 @@ class PostController extends Controller
         //
     }
 
-   
+
     public function store(Request $request)
     {
         //
     }
 
-  
+
     public function show($slug)
     {
-    $post=Post::where(['slug' => $slug])->first();  
+    $post=Post::where(['slug' => $slug])->first();
         return view('posts.post', [
             'post'=>$post,
-        ]); 
-        
+        ]);
+
     }
 
     /**

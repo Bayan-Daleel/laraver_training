@@ -10,11 +10,10 @@ class="transition-colors duration-300 hover:bg-gray-100 border border-black bord
             <div class="space-x-2">
                <x-category-button :category='$post->category'/>
             </div>
-
             <div class="mt-4">
                 <h1 class="text-3xl">
                     <a href="/posts/{{$post->slug}}">
-                    {{$post->title}} </a>         
+                    {{$post->title}} </a>
              </h1>
 
                 <span class="mt-2 block text-gray-400 text-xs">
@@ -25,7 +24,7 @@ class="transition-colors duration-300 hover:bg-gray-100 border border-black bord
 
         <div class="text-sm mt-2">
             <p>
-                {{ $post->excerpt }}      
+                {{ $post->excerpt }}
              </p>
 
             <p class="mt-4">

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use PhpParser\Node\Expr\FuncCall;
 
 class Post extends Model
 {
@@ -22,5 +23,15 @@ public function category(){
 public function author(){
     return  $this->belongsTo(User::class ,'user_id');
 }
+
+public function scopeFilter($query,array $filters)
+{
+    $query->when($filters ['search'] ?? false , function ($query,$search){
+        $query->where(fn($query)=>
+        $query->where('title','like', '%' .'$search' .'%')
+            ->orwhere('body','like', '%' .'$search' .'%')
+        );
+    });
 }
-  
+}
+

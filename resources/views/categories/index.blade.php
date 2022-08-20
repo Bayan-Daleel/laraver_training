@@ -14,21 +14,20 @@
         </tr>
       </thead>
       <tbody>
-          @foreach ($categories as $category) 
+          @foreach ($categories as $category)
           <tr>
             <td>{{$category->name}}</td>
             <td>{{$category->slug}}</td>
             <td>
-              <form actions="{{route('categories.edit',$category->id)}}" method="GET">
+              <form action="{{route('categories.edit',$category->id)}}" method="GET">
                 <button type="submit" class="btn btn-primary btn-sm">update</button>
               </form>
-              
+
             </td>
           </tr>
-              
           @endforeach
         </tbody>
       </table>
   </div>
- 
+
 </x-layout>

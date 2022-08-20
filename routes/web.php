@@ -27,45 +27,44 @@ use Spatie\LaravelIgnition\Solutions\UseDefaultValetDbCredentialsSolution;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [PostController::class, 'index']);
+Route::get('/', [PostController::class, 'index'])->name('home');
 Route::resource('posts',PostController::class)->only(
    ['show']);
 
 
-
-//Route::get('/posts/{post:slug}', [PostController::class, 'show']    
+//Route::get('/posts/{post:slug}', [PostController::class, 'show']
 //$post_content=Post::findOrFail($post->id);
 //ddd($post_content);
- 
+
 //);
 
 
-Route::get('/categories/{category:slug}', function ( Category $category)   
+Route::get('/categories/{category:slug}', function ( Category $category)
 {
    return view('posts.index',[
       'posts'=>$category->posts
       //->load(['category','author'])
    ]);
   // $post_content=Post::findOrFail($post->id);
-}); 
+});
 
 Route::get('users', [UserContraller::class, 'index']);
- 
+
 Route::get('users/invoke', InvController::class);
 
-//Route::resource('categories',CategoryController::class); 
+//Route::resource('categories',CategoryController::class);
 
 
-Route::get('/author/{author:user_name}', function (User $author)   
+Route::get('/author/{author:user_name}', function (User $author)
 {
    return view('posts.index',[
       'posts'=>$author->posts
       //->load(['category','author'])
    ]);
   // $post_content=Post::findOrFail($post->id);
-}); 
+});
 
-Route::get('test', function(){ 
+Route::get('test', function(){
    Post::create(['title'=>'my first post',
    'excerpt'=>'jfhvjfvjdfvfdv','body'=>'kkdbdbnjdn',
    'slug'=>'my first post','category_id'=>'2']);
@@ -75,7 +74,7 @@ Route::get('test', function(){
    Post::create(['title'=>'my third post',
    'excerpt'=>'jfhvjfvjdfvfdv','body'=>'kkdbdbnjdn',
    'slug'=>'my third post','category_id'=>'2']);
-   
+
   return 'Post created';
    /*  $post1=Post::find(1);
 $post1 */
