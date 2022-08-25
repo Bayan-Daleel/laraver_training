@@ -23,7 +23,7 @@ class PostFactory extends Factory
            'category_id' =>Category::factory(),
             'title' =>$this->faker->sentence,
             'excerpt' =>$this->faker->sentence,
-            'body' => $this->faker->paragraph,
+            'body' => $this->faker->paragraph(10),
             'slug' => $this->faker->slug,
         ];
     }

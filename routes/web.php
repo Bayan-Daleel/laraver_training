@@ -10,7 +10,8 @@ use Monolog\Handler\Slack\SlackRecord;
 use App\Http\Controllers\InvController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserContraller;
-
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionsController;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Http\Controllers\CategoryController;
 use SebastianBergmann\Comparator\DoubleComparator;
@@ -50,7 +51,13 @@ Route::get('/categories/{category:slug}', function ( Category $category)
 
 Route::get('users', [UserContraller::class, 'index']);
 
-Route::get('users/invoke', InvController::class);
+Route::get('register', [RegisterController::class,'create'])->middleware('guest');
+Route::post('register', [RegisterController::class,'store'])->middleware('guest');
+
+Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
+Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
+
+Route::get('users', [UserContraller::class, 'index']);
 
 //Route::resource('categories',CategoryController::class);
 

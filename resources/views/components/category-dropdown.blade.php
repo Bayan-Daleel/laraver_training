@@ -1,4 +1,4 @@
-<x-dropdown/>
+<x-dropdown>
 <x-slot name="trigger">
     <button class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
         {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Categories' }}
@@ -10,13 +10,17 @@
   <options=bold>“ Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. ”</>
   <fg=gray>— Immanuel Kant</>
  -->
-<x-dropdown-item href="/" :active="request()->routeIs('home')">
+<x-dropdown-item href="/?{{http_build_query(request()->except('category','page'))}}"
+                 :active="count(request()->all())==0">
+
     ALL
 </x-dropdown-item>
+    {{--request()->routeIs('home')">--}}
 
 @foreach($categories as $category)
 <x-dropdown-item
-    href="/?category/{{$category->slug}}"
+    href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category', 'page')) }}"
+    {{--href="/?category/{{$category->slug}}"--}}
     :active='request()->is("categories/{$category->slug}")'
 >
         {{ucwords($category->name)}}

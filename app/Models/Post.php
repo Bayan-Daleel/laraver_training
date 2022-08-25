@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Models;
-
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use PhpParser\Node\Expr\FuncCall;
+
+use App\Http\Requests;
 
 class Post extends Model
 {
@@ -28,10 +30,11 @@ public function scopeFilter($query,array $filters)
 {
     $query->when($filters ['search'] ?? false , function ($query,$search){
         $query->where(fn($query)=>
-        $query->where('title','like', '%' .'$search' .'%')
-            ->orwhere('body','like', '%' .'$search' .'%')
+        $query->where('title','like', '%' .$search .'%')
+            ->orwhere('body','like', '%' .$search .'%')
         );
     });
+
 }
 }
 

@@ -2,31 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\AssignOp\Pow;
-use App\Http\Requests;
-use App\User;
 
-class PostController extends Controller
+class SessionsController extends Controller
 {
-
     public function index()
     {
-       // DB::Listen(function($query){
-         // logger($query->sql,$query->bindings);
-       // });
-        return view('posts.index', [
-            //'posts'=>Post::all(),
-           // 'posts'=>Post::latest()->filter(\request(['search','category','author']))->get(),
-            //with('Category')->get(),
-            'posts'=>Post::latest()->filter(\request(['search','category','author']))->paginate(6 )->withQueryString() ,
-
-        ]);
-
-
-
+        return view('session.create');
     }
 
     /**
@@ -39,20 +21,26 @@ class PostController extends Controller
         //
     }
 
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         //
     }
 
-
-    public function show($slug)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    $post=Post::where(['slug' => $slug])->first();
-        return view('posts.post', [
-            'post'=>$post,
-        ]);
-
+        //
     }
 
     /**

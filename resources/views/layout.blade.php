@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/another.css">
 </head>
 <body>
-
     <header>
         @yield('my-header')
     </header>
