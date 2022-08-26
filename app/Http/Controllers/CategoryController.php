@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-   
+
     public function index()
     {
        return view('categories.index',[
@@ -17,7 +17,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-       // 
+       //
           return view('categories.create');
     }
 
@@ -40,7 +40,8 @@ class CategoryController extends Controller
 
     /**
      * Display the specified resource.
-     *
+    Category::create($request->post());
+    return redirect()->route('categories.index')->with('success', 'Category Added Successfully');*
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

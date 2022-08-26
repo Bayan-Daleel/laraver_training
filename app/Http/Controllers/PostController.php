@@ -17,15 +17,17 @@ class PostController extends Controller
        // DB::Listen(function($query){
          // logger($query->sql,$query->bindings);
        // });
-        return view('posts.index', [
+       /* return view('posts.index', [
             //'posts'=>Post::all(),
            // 'posts'=>Post::latest()->filter(\request(['search','category','author']))->get(),
             //with('Category')->get(),
             'posts'=>Post::latest()->filter(\request(['search','category','author']))->paginate(6 )->withQueryString() ,
+        ]);*/
 
+        return view('posts.index', [
+            'posts' => Post::latest()->filter(request(['search', 'category', 'author'])
+            )->paginate(6)->withQueryString(),
         ]);
-
-
 
     }
 

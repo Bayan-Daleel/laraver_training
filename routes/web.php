@@ -43,14 +43,14 @@ Route::resource('posts',PostController::class)->only(
 //);
 
 
-Route::get('/categories/{category:slug}', function ( Category $category)
+/*Route::get('/categories/{category:slug}', function ( Category $category)
 {
    return view('posts.index',[
       'posts'=>$category->posts
       //->load(['category','author'])
    ]);
   // $post_content=Post::findOrFail($post->id);
-});
+});*/
 
 Route::get('users', [UserContraller::class, 'index']);
 
@@ -65,7 +65,7 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 Route::get('users', [UserContraller::class, 'index']);
 
 Route::post('posts/{post:slug}/comments',[PostCommentContraller::class,'store']);
-//Route::resource('categories',CategoryController::class);
+Route::resource('categories',CategoryController::class);
 
 /*Route::get('/ping',function () {
     $mailchimp = new ApiClient();
@@ -78,6 +78,7 @@ Route::post('posts/{post:slug}/comments',[PostCommentContraller::class,'store'])
     dd($response);
 });*/
 Route::post('newsletter',function (){
+   // dd('hello');
     request()->validate([
         'email'=>'required|email'
     ]);
@@ -103,10 +104,8 @@ Route::post('newsletter',function (){
     'email'=>'this email could not add to our lest ....'
 ]);
     }
-
-    return redirect('/')->with('success','your successfuly subscribe for new letter');
+    return redirect('/')->with('success','your successfully subscribe for new letter');
    // dd($response);
-
 
 });
 

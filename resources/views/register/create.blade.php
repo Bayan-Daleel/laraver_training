@@ -29,7 +29,7 @@
                     <input class="border border-gray-400 p-2 w-full"
                            type="text"
                            name="user_name"
-                           id="username"
+                           id="user_name"
                            value="{{ old('user_name') }}"
                            required
                     >
