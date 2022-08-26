@@ -3,6 +3,8 @@
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use MailchimpMarketing\ApiClient;
 use function PHPSTORM_META\map;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +67,48 @@ Route::get('users', [UserContraller::class, 'index']);
 Route::post('posts/{post:slug}/comments',[PostCommentContraller::class,'store']);
 //Route::resource('categories',CategoryController::class);
 
+/*Route::get('/ping',function () {
+    $mailchimp = new ApiClient();
+    $mailchimp->setConfig([
+        'apiKey' => '996111257288db0a8311612fed59c3fd-us14',
+        'server' => 'us14'
+    ]);
+   // $response = $mailchimp->ping->get();
+    $response=$mailchimp->lists->getAllLists();
+    dd($response);
+});*/
+Route::post('newsletter',function (){
+    request()->validate([
+        'email'=>'required|email'
+    ]);
+    $mailchimp = new ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us14'
+    ]);
+
+  //  $response = $mailchimp->ping->get();
+    //$response=$mailchimp->lists->getAllLists();
+   // $response=$mailchimp->lists->getList('a4f031b94f');
+
+    try {
+        $response = $mailchimp->lists->addListMember('a4f031b94f', [
+            "email_address" => request('email'),
+            "status" => "subscribed",]);
+        dd($response);
+    }
+    catch (Exception $exception){
+   throw ValidationException:: withMessages([
+    'email'=>'this email could not add to our lest ....'
+]);
+    }
+
+    return redirect('/')->with('success','your successfuly subscribe for new letter');
+   // dd($response);
+
+
+});
 
 Route::get('/author/{author:user_name}', function (User $author)
 {
