@@ -15,7 +15,7 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded=['id'];
-    protected $with=['category','author'];
+    protected $with=['category','author','comments'];
     protected $fillable=['title','excerpt','body','slug','category_id'];
 
 public function category(){
@@ -26,6 +26,9 @@ public function author(){
     return  $this->belongsTo(User::class ,'user_id');
 }
 
+public function comments(){
+    return $this->hasMany( comment::class);
+}
 public function scopeFilter($query,array $filters)
 {
     $query->when($filters ['search'] ?? false , function ($query,$search){

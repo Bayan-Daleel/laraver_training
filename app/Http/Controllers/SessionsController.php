@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+
 
 class SessionsController extends Controller
 {
@@ -11,14 +13,9 @@ class SessionsController extends Controller
         return view('session.create');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +26,26 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+            // we need to find an email address that exists on the users table
+            // and specifically in the email column that matches what you provided
+            'email' => 'required|exists:users,email',
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (auth()->attempt($attributes)){
+            session()->regenerate();
+            redirect('/')->with('success','welcom Back!');
+        }
+        return back()->withInput()->withErrors([
+           'email'=> "your ....."
+         ]);
+
+        //throw ValidationException::withMessages([
+          //  'email' => 'Your provided credentials could not be verified'
+      //  ]);
+
     }
 
     /**
@@ -66,14 +82,10 @@ class SessionsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        auth()->logout();
+        return redirect('/')->with('success','goodby!');
+
     }
 }

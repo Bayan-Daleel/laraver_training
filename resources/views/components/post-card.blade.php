@@ -23,6 +23,15 @@
             </div>
         </header>
 
+
+        @if(count($post->comments)>1)
+            {{count($post->comments).'comments'}}
+        @elseif(count($post->comments)>0)
+            {{count($post->comments).' comment'}}
+        @endif
+
+
+
         <div class="text-sm mt-4">
             <p>
                 {{ $post->excerpt}}

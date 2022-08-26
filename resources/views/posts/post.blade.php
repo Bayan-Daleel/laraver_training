@@ -42,7 +42,7 @@
 
                         <div class="space-x-2">
                             <x-category-button :category='$post->category'/>
-                           
+
                         </div>
                     </div>
 
@@ -54,10 +54,17 @@
                     {{ $post->body }}
                     </div>
                 </div>
+                <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                  @include('posts._add-comment-form')
+
+                    @foreach($post->comments as $comment)
+                        <x-post-comment :comment="$comment" />
+                    @endforeach
+                </section>
             </article>
         </main>
 
-      
+
     </section>
 
 
@@ -81,15 +88,15 @@
     {{-- <article>
         <h1><?=$post_content->title?></h1>
             <img src="{{$post_content->img}}" alt="">
-           
-      <p style="font-size: 15px"> 
+
+      <p style="font-size: 15px">
   By <a href="/author/{{$post_content->author->user_name}}">{{$post_content->author->name}}</a> , <a href="/categories/{{$post_content->category->id}}">{{$post_content->category->name}}</a>
          </p>
                   <div>
                 {!!$post_content->body!!}
                 </div>
         </article>
-        
+
         <a href="/">Go Back</a> --}}
 </x-layout>
 
