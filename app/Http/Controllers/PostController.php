@@ -55,15 +55,20 @@ class PostController extends Controller
 
 
 
-    public function store(StorePosRequest $request)
+    public function store(Request $request)
     {
       //  dd('hello');
         //dd(\request()->all());
-        /*$attributes=\request()->validate([
-
-        ]);*/
+        $attributes=\request()->validate([
+            'title'=>'required',
+            'thumbnail'=>'image',
+            'slug'=>['required ',Rule::unique('posts','slug')],
+            'excerpt'=>'required',
+            'body'=>'required',
+            'category_id'=>['required ',Rule::exists('categories','id')],
+        ]);
         //  dd($attributes);
-        $attributes=$request->all();
+      //  $attributes=$request->all();
         $attributes['user_id']=auth()->id();
         $attributes['thumbnail']=request()->file('thumbnail')->store('thumbnail');
         //dd($attributes);
