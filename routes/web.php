@@ -32,6 +32,7 @@ use Spatie\LaravelIgnition\Solutions\UseDefaultValetDbCredentialsSolution;
 |
 */
 Route::get('/', [PostController::class, 'index'])->name('home');
+
 Route::resource('posts',PostController::class)->only(
    ['show']);
 
@@ -42,15 +43,15 @@ Route::resource('posts',PostController::class)->only(
 
 //);
 
-
-/*Route::get('/categories/{category:slug}', function ( Category $category)
+Route::resource('categories',CategoryController::class);
+Route::get('/categories/{category:slug}', function (Category $category)
 {
    return view('posts.index',[
       'posts'=>$category->posts
       //->load(['category','author'])
    ]);
   // $post_content=Post::findOrFail($post->id);
-});*/
+});
 
 Route::get('users', [UserContraller::class, 'index']);
 

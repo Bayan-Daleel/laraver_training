@@ -18,6 +18,8 @@ class PostController extends Controller
 
     public function index()
     {
+
+       //
        // DB::Listen(function($query){
          // logger($query->sql,$query->bindings);
        // });
@@ -31,6 +33,7 @@ class PostController extends Controller
         return view('posts.index', [
             'posts' => Post::latest()->filter(request(['search', 'category', 'author'])
             )->paginate(6)->withQueryString(),
+
         ]);
 
     }
