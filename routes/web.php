@@ -67,6 +67,13 @@ Route::get('users', [UserContraller::class, 'index']);
 Route::post('posts/{post:slug}/comments',[PostCommentContraller::class,'store']);
 Route::resource('categories',CategoryController::class);
 
+Route::get('admin/posts/create',[PostController::class,'create']);
+    //->middleware('permissions');
+
+Route::post('admin/posts',[PostController::class,'store']);
+    //->middleware('permissions');
+
+
 /*Route::get('/ping',function () {
     $mailchimp = new ApiClient();
     $mailchimp->setConfig([
@@ -79,6 +86,7 @@ Route::resource('categories',CategoryController::class);
 });*/
 Route::post('newsletter',function (){
    // dd('hello');
+    //dd(request()->all());
     request()->validate([
         'email'=>'required|email'
     ]);
@@ -88,22 +96,22 @@ Route::post('newsletter',function (){
         'apiKey' => config('services.mailchimp.key'),
         'server' => 'us14'
     ]);
-
   //  $response = $mailchimp->ping->get();
     //$response=$mailchimp->lists->getAllLists();
    // $response=$mailchimp->lists->getList('a4f031b94f');
-
     try {
         $response = $mailchimp->lists->addListMember('a4f031b94f', [
             "email_address" => request('email'),
             "status" => "subscribed",]);
-        dd($response);
+      //  dd($response);
     }
     catch (Exception $exception){
    throw ValidationException:: withMessages([
     'email'=>'this email could not add to our lest ....'
 ]);
     }
+  //  dd( $response=$mailchimp->lists->getList('a4f031b94f'));
+
     return redirect('/')->with('success','your successfully subscribe for new letter');
    // dd($response);
 

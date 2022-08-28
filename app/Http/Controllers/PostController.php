@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePosRequest;
 use App\Models\Post;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Monolog\Handler\IFTTTHandler;
 use PhpParser\Node\Expr\AssignOp\Pow;
 use App\Http\Requests;
 use App\User;
@@ -38,13 +42,33 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+       \Gate::allows('admin');
+
+       /* if (auth()->guest()){
+            //abort(403);
+            return redirect('/');
+        }*/
+     //  $this->authorize('admin');
+
+        return view('posts.create');
     }
 
 
-    public function store(Request $request)
+
+    public function store(StorePosRequest $request)
     {
-        //
+      //  dd('hello');
+        //dd(\request()->all());
+        /*$attributes=\request()->validate([
+
+        ]);*/
+        //  dd($attributes);
+        $attributes=$request->all();
+        $attributes['user_id']=auth()->id();
+        $attributes['thumbnail']=request()->file('thumbnail')->store('thumbnail');
+        //dd($attributes);
+        Post::create($attributes);
+        return redirect('/');
     }
 
 
